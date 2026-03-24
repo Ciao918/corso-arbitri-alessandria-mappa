@@ -2,155 +2,144 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Master Arbitro - Regolamento & Quiz</title>
+    <title>Arbitro Pro - Generatore Casistica Dinamico</title>
     <style>
-        :root { --blue: #0d47a1; --gold: #ffc107; --red: #b71c1c; --light: #f8f9fa; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); color: #333; }
-        header { background: var(--blue); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--gold); }
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        :root { --aia-blue: #001f3f; --aia-gold: #ffca28; --accent: #0074d9; --bg: #fdfdfd; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); color: #333; }
+        header { background: var(--aia-blue); color: white; padding: 25px; text-align: center; border-bottom: 5px solid var(--aia-gold); }
+        .container { max-width: 900px; margin: 20px auto; padding: 20px; }
         
-        /* Sezione Regolamento */
-        .regola { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .regola h3 { color: var(--blue); border-bottom: 2px solid var(--gold); }
-        .highlight { background: #fff3cd; padding: 10px; border-left: 5px solid var(--gold); margin: 10px 0; }
+        /* Pannello Studio */
+        .manuale { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border: 1px solid #ddd; }
+        .manuale h2 { color: var(--aia-blue); border-left: 5px solid var(--aia-gold); padding-left: 15px; }
+        .grid-regole { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 0.9rem; }
         
-        /* Sezione Quiz */
-        #quiz-section { background: #2c3e50; color: white; padding: 30px; border-radius: 15px; display: none; text-align: center; }
-        .timer { font-size: 2rem; color: var(--gold); font-weight: bold; margin-bottom: 10px; }
-        .btn { padding: 15px 30px; cursor: pointer; border: none; border-radius: 5px; font-weight: bold; transition: 0.3s; margin: 10px; }
-        .btn-start { background: var(--gold); color: black; font-size: 1.2rem; }
-        .btn-true { background: #2ecc71; color: white; }
-        .btn-false { background: #e74c3c; color: white; }
+        /* Quiz Dinamico */
+        #quiz-box { background: #111; color: #eee; padding: 40px; border-radius: 20px; display: none; text-align: center; min-height: 350px; }
+        #timer-circle { font-size: 3rem; color: var(--aia-gold); margin-bottom: 20px; font-family: monospace; }
+        .question-text { font-size: 1.4rem; line-height: 1.4; margin-bottom: 30px; min-height: 100px; }
+        .controls { display: flex; justify-content: center; gap: 20px; }
+        .btn { padding: 15px 40px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+        .btn-true { background: #2ecc40; color: white; }
+        .btn-false { background: #ff4136; color: white; }
+        .btn-start { background: var(--aia-gold); color: black; margin-top: 10px; width: 100%; font-size: 1.2rem; }
+        
+        .status-bar { margin-top: 20px; color: #888; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>SUPER REGOLAMENTO AIA 2026</h1>
-    <p>Misure, DOGSO, SPA e Quiz Esame</p>
-    <button class="btn btn-start" onclick="startQuiz()">AVVIA QUIZ (20 DOMANDE)</button>
+    <h1>SIMULATORE DINAMICO AIA</h1>
+    <p>Le domande cambiano ad ogni tentativo per testare la tua vera preparazione.</p>
 </header>
 
-<div class="container" id="main-content">
-    
-    <div class="regola">
-        <h3>📏 MISURE E CAMPO (Regola 1 & 2)</h3>
-        <ul>
-            <li><strong>Lunghezza:</strong> Min 90m / Max 120m.</li>
-            <li><strong>Larghezza:</strong> Min 45m / Max 90m.</li>
-            <li><strong>Porte:</strong> 7.32m tra i pali, 2.44m altezza traversa.</li>
-            <li><strong>Cerchio centrale:</strong> Raggio 9.15m.</li>
-            <li><strong>Pallone:</strong> Circonferenza 68-70cm, Peso 410-450g.</li>
-        </ul>
-    </div>
-
-    <div class="regola">
-        <h3>🚩 FUORIGIOCO (Regola 11)</h3>
-        <p>Un calciatore è in posizione se una parte qualsiasi di testa, corpo o piedi è più vicina alla porta rispetto al pallone e al <strong>penultimo difendente</strong>.</p>
-        <div class="highlight">
-            <strong>Quando è punibile?</strong> Se tocca palla, se interferisce con un avversario (es: copre visuale) o se trae vantaggio da un palo/traversa. 
-            <em>Mai fuorigioco su: Rimessa laterale, Calcio d'angolo, Calcio di rinvio.</em>
+<div class="container" id="study-view">
+    <div class="manuale">
+        <h2>📚 Compendio Rapido (Tutte le 17 Regole)</h2>
+        <div class="grid-regole">
+            <div><strong>R1-4 (Basi):</strong> Campo (105x68m standard), Pressione palla (0.6-1.1), Giocatori (min 7), Parastinchi obbligatori.</div>
+            <div><strong>R5-6 (Ufficiali):</strong> L'arbitro decide fino alla ripresa. Il VAR corregge solo "Chiari ed Evidenti Errori".</div>
+            <div><strong>R7-10 (Gioco):</strong> Recupero deciso solo dall'arbitro. Gol valido se palla interamente oltre la linea.</div>
+            <div><strong>R11 (Offside):</strong> Conta testa, tronco e piedi. Braccia/Mani NO. No offside da rimessa fondo, laterale, angolo.</div>
+            <div><strong>R12 (Falli):</strong> DOGSO in area + tentativo palla = Giallo. DOGSO + Spinta/Mano/Trattenuta = Rosso.</div>
+            <div><strong>R13-17 (Riprese):</strong> Distanza 9.15m. Doppia punizione (indiretto) se il tiratore tocca palla due volte.</div>
         </div>
-    </div>
-
-    <div class="regola">
-        <h3>⚖️ DOGSO vs SPA (Regola 12)</h3>
-        <div style="display: flex; gap: 20px;">
-            <div style="flex:1">
-                <strong>DOGSO (Rosso)</strong>: Nega evidente opportunità di gol.
-                <p>Criteri: Distanza, Direzione, Controllo palla, Posizione difensori.</p>
-                <small>*Se in area e cerco la palla: Giallo (Depenalizzazione).</small>
-            </div>
-            <div style="flex:1">
-                <strong>SPA (Giallo)</strong>: Interrompe attacco promettente.
-                <p>Mancano uno o più criteri del DOGSO ma l'azione era pericolosa.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="regola">
-        <h3>⚽ FALLI E RIPRESE</h3>
-        <p><strong>Calcio Punizione Diretto:</strong> Falli di mano, contatti negligenti, imprudenti o con vigoria sproporzionata.</p>
-        <p><strong>Calcio Punizione Indiretto:</strong> Gioco pericoloso, ostacolo senza contatto, portiere che tiene palla > 6 sec, retropassaggio volontario di piede al portiere.</p>
+        <button class="btn btn-start" onclick="initQuiz()">GENERA ESAME CASUALE (20 DOMANDE)</button>
     </div>
 </div>
 
-<div class="container" id="quiz-section">
-    <div class="timer" id="timer">15</div>
-    <h2 id="question-text">Domanda qui</h2>
-    <div id="options">
-        <button class="btn btn-true" onclick="checkAnswer(true)">VERO</button>
-        <button class="btn btn-false" onclick="checkAnswer(false)">FALSO</button>
+<div class="container" id="quiz-box">
+    <div id="timer-circle">15</div>
+    <div class="question-text" id="q-text">Preparazione scenario...</div>
+    <div class="controls">
+        <button class="btn btn-true" onclick="handleAnswer(true)">VERO</button>
+        <button class="btn btn-false" onclick="handleAnswer(false)">FALSO</button>
     </div>
-    <p id="score-display">Domanda 1 di 20</p>
+    <div class="status-bar" id="status">Domanda 1 di 20</div>
 </div>
 
 <script>
-const questions = [
-    { q: "L'altezza della traversa è di 2.44 metri?", a: true },
-    { q: "Si può essere in fuorigioco sulla propria metà campo?", a: false },
-    { q: "Su rimessa laterale esiste il fuorigioco?", a: false },
-    { q: "Il portiere può toccare palla con le mani su retropassaggio volontario di piede di un compagno?", a: false },
-    { q: "Il raggio del cerchio centrale è di 9.15 metri?", a: true },
-    { q: "Il DOGSO in area con tentativo di giocare il pallone è Rosso?", a: false },
-    { q: "Un attacco promettente interrotto (SPA) è sempre Giallo?", a: true },
-    { q: "L'arbitro può cambiare decisione se il gioco non è ancora ripreso?", a: true },
-    { q: "Se la palla colpisce l'arbitro e finisce in rete, il gol è valido?", a: false },
-    { q: "Il numero minimo di giocatori per iniziare una gara è 7?", a: true },
-    { q: "Il calcio di rinvio può essere segnato direttamente nella porta avversaria?", a: true },
-    { q: "Un giocatore che toglie la maglia dopo un gol va ammonito?", a: true },
-    { q: "Il fuorigioco si valuta al momento del tocco del compagno?", a: true },
-    { q: "Il fallo di mano volontario fuori area è punizione indiretta?", a: false },
-    { q: "La larghezza massima di un campo può essere 90 metri?", a: true },
-    { q: "Un oggetto lanciato contro il pallone comporta punizione diretta?", a: true },
-    { q: "Il vantaggio si applica sempre, anche su falli da rosso?", a: false },
-    { q: "I parastinchi sono facoltativi?", a: false },
-    { q: "Se un rigore colpisce il palo e torna al tiratore che segna senza tocchi altrui, il gol è valido?", a: false },
-    { q: "L'arbitro è l'unico cronometrista ufficiale della gara?", a: true }
+// DATABASE ESTESO PER GENERAZIONE CASUALE
+const masterDb = [
+    { q: "Un calciatore in fuorigioco nella propria metà campo commette infrazione?", a: false },
+    { q: "Il portiere può segnare un gol calciando la palla con le mani dalla propria area?", a: true },
+    { q: "Un rigore calciato direttamente all'indietro è considerato infrazione? (Si riprende con punizione indiretta)", a: true },
+    { q: "La larghezza minima della porta è 7.32 metri?", a: true },
+    { q: "Se la palla colpisce l'arbitro e resta in campo, il gioco deve sempre proseguire?", a: false },
+    { q: "Un giocatore che segna un gol e si copre il volto con una maschera va ammonito?", a: true },
+    { q: "Si può segnare un autogol direttamente da calcio d'angolo?", a: false },
+    { q: "Il portiere commette SPA parando con le mani fuori area per fermare un attacco pericoloso?", a: true },
+    { q: "Il fallo di mano è sempre punito con un calcio di punizione diretto?", a: true },
+    { q: "Un difensore in area commette DOGSO spingendo l'avversario senza guardare la palla: è Rosso?", a: true },
+    { q: "Il calcio d'inizio può essere calciato all'indietro?", a: true },
+    { q: "Si può essere in fuorigioco se si riceve palla da calcio di rinvio?", a: false },
+    { q: "Se un giocatore perde accidentalmente una scarpa e segna subito dopo, il gol è valido?", a: true },
+    { q: "L'arbitro può espellere un giocatore prima del calcio d'inizio?", a: true },
+    { q: "Una gara può iniziare se una squadra ha solo 7 giocatori?", a: true },
+    { q: "Il pallone è in gioco quando tocca un assistente dell'arbitro che si trova sulla linea laterale (dentro)?", a: true },
+    { q: "Un calcio di punizione indiretto calciato direttamente nella porta avversaria comporta un calcio di rinvio?", a: true },
+    { q: "Il portiere può ricevere palla tra le mani su passaggio volontario di testa di un compagno?", a: true },
+    { q: "Il rinvio del portiere dal fondo deve uscire dall'area di rigore per essere in gioco?", a: false },
+    { q: "Un calciatore che entra in campo senza autorizzazione va sempre ammonito?", a: true },
+    { q: "Il vantaggio non deve essere applicato in situazioni di grave fallo di gioco, a meno che non ci sia un'immediata opportunità di segnare?", a: true },
+    { q: "Se un difensore sputa a un avversario nella propria area, l'arbitro concede il rigore?", a: true },
+    { q: "Il pallone deve avere un peso tra 410 e 450 grammi all'inizio della gara?", a: true },
+    { q: "Un massaggiatore che entra in campo e tocca il pallone comporta una rimessa dell'arbitro?", a: false }, // Calcio punizione diretto/rigore
+    { q: "Su calcio di rigore, il portiere deve avere almeno parte di un piede sulla linea al momento del tiro?", a: true }
 ];
 
-let currentQ = 0;
+let examQuestions = [];
+let currentIdx = 0;
 let score = 0;
-let timeLeft = 15;
 let timer;
+let timeLeft = 15;
 
-function startQuiz() {
-    document.getElementById('main-content').style.display = 'none';
-    document.getElementById('quiz-section').style.display = 'block';
-    showQuestion();
+function initQuiz() {
+    // Generazione Casuale: mischia il database e prendi le prime 20
+    examQuestions = masterDb.sort(() => 0.5 - Math.random()).slice(0, 20);
+    currentIdx = 0;
+    score = 0;
+    document.getElementById('study-view').style.display = 'none';
+    document.getElementById('quiz-box').style.display = 'block';
+    renderQuestion();
 }
 
-function showQuestion() {
-    if (currentQ >= 20) {
-        alert("Quiz terminato! Punteggio: " + score + "/20");
-        location.reload();
+function renderQuestion() {
+    if (currentIdx >= examQuestions.length) {
+        finish();
         return;
     }
+    
     timeLeft = 15;
-    document.getElementById('timer').innerText = timeLeft;
-    document.getElementById('question-text').innerText = questions[currentQ].q;
-    document.getElementById('score-display').innerText = "Domanda " + (currentQ + 1) + " di 20";
+    document.getElementById('timer-circle').innerText = timeLeft;
+    document.getElementById('q-text').innerText = examQuestions[currentIdx].q;
+    document.getElementById('status').innerText = `Domanda ${currentIdx + 1} di 20 | Punteggio attuale: ${score}`;
     
     clearInterval(timer);
     timer = setInterval(() => {
         timeLeft--;
-        document.getElementById('timer').innerText = timeLeft;
-        if (timeLeft <= 0) {
-            checkAnswer(null);
-        }
+        document.getElementById('timer-circle').innerText = timeLeft;
+        if (timeLeft <= 0) handleAnswer(null);
     }, 1000);
 }
 
-function checkAnswer(val) {
+function handleAnswer(ans) {
     clearInterval(timer);
-    if (val === questions[currentQ].a) {
+    if (ans === examQuestions[currentIdx].a) {
         score++;
-        alert("Corretto!");
-    } else {
-        alert("Sbagliato! La risposta era " + (questions[currentQ].a ? "VERO" : "FALSO"));
     }
-    currentQ++;
-    showQuestion();
+    currentIdx++;
+    renderQuestion();
+}
+
+function finish() {
+    let esito = score >= 16 ? "PROMOSSO! Sei pronto per il campo." : "BOCCIATO. Torna a studiare il regolamento.";
+    document.getElementById('quiz-box').innerHTML = `
+        <h1 style="color:var(--aia-gold)">${esito}</h1>
+        <p style="font-size:2rem">Punteggio finale: ${score}/20</p>
+        <button class="btn btn-start" onclick="location.reload()">RICOMINCIA (NUOVE DOMANDE)</button>
+    `;
 }
 </script>
 

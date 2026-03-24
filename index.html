@@ -2,295 +2,157 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WikiArbitri Completo - Tutte le 17 Regole</title>
+    <title>Master Arbitro - Regolamento & Quiz</title>
     <style>
-        :root {
-            --primary: #1a237e; /* Blu scuro professionale */
-            --secondary: #ffd600; /* Giallo arbitro */
-            --accent-red: #d32f2f; /* Rosso espulsione */
-            --accent-yellow: #fbc02d; /* Giallo ammonizione */
-            --bg: #f0f4f8; /* Grigio chiarissimo per lo sfondo */
-            --card-bg: #ffffff; /* Bianco per le schede */
-            --text: #2c3e50; /* Testo scuro */
-            --text-light: #ecf0f1; /* Testo chiaro */
-            --border: #dcdde1; /* Bordi grigi */
-        }
-
-        body {
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            background: var(--bg);
-            color: var(--text);
-        }
-
-        header {
-            background: var(--primary);
-            color: var(--text-light);
-            padding: 3rem 1rem;
-            text-align: center;
-            border-bottom: 6px solid var(--secondary);
-        }
-
-        header h1 { margin: 0; font-size: 2.5rem; text-transform: uppercase; }
-        header p { margin: 0.5rem 0 0; font-weight: 300; }
-
-        nav {
-            background: var(--card-bg);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            z-index: 1000;
-        }
-
-        nav a {
-            margin: 5px 12px;
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover { color: var(--accent-red); }
-
-        .container {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        h2 { color: var(--primary); border-bottom: 3px solid var(--secondary); padding-bottom: 12px; margin-top: 40px; }
-        h3 { color: #34495e; margin-bottom: 10px; }
-
-        .regola-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            border-left: 6px solid var(--primary);
-            transition: transform 0.2s;
-        }
-
-        .regola-card:hover { transform: translateY(-3px); }
-
-        .numero-regola {
-            background: var(--secondary);
-            color: var(--primary);
-            font-weight: 900;
-            padding: 5px 12px;
-            border-radius: 50px;
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .spiegazione, .esempio { margin-top: 15px; }
-        .esempio strong { color: var(--accent-red); }
-
-        .focus-box {
-            background: #e8f0fe;
-            padding: 20px;
-            border-radius: 8px;
-            border: 2px solid var(--primary);
-            margin: 20px 0;
-        }
-
-        .dogso-spa-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .dogso { border: 3px solid var(--accent-red); padding: 20px; border-radius: 12px; background: #fff5f5; }
-        .spa { border: 3px solid var(--accent-yellow); padding: 20px; border-radius: 12px; background: #fffdeb; }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-        .badge-red { background: var(--accent-red); color: white; }
-        .badge-yellow { background: var(--accent-yellow); color: black; }
-
-        footer { text-align: center; padding: 50px; color: #95a5a6; font-size: 0.9rem; background: var(--card-bg); margin-top: 50px; }
-
-        @media (max-width: 768px) {
-            .dogso-spa-section { grid-template-columns: 1fr; }
-            header h1 { font-size: 2rem; }
-        }
+        :root { --blue: #0d47a1; --gold: #ffc107; --red: #b71c1c; --light: #f8f9fa; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); color: #333; }
+        header { background: var(--blue); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--gold); }
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        
+        /* Sezione Regolamento */
+        .regola { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .regola h3 { color: var(--blue); border-bottom: 2px solid var(--gold); }
+        .highlight { background: #fff3cd; padding: 10px; border-left: 5px solid var(--gold); margin: 10px 0; }
+        
+        /* Sezione Quiz */
+        #quiz-section { background: #2c3e50; color: white; padding: 30px; border-radius: 15px; display: none; text-align: center; }
+        .timer { font-size: 2rem; color: var(--gold); font-weight: bold; margin-bottom: 10px; }
+        .btn { padding: 15px 30px; cursor: pointer; border: none; border-radius: 5px; font-weight: bold; transition: 0.3s; margin: 10px; }
+        .btn-start { background: var(--gold); color: black; font-size: 1.2rem; }
+        .btn-true { background: #2ecc71; color: white; }
+        .btn-false { background: #e74c3c; color: white; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>WikiArbitri Completo</h1>
-    <p>Guida Interattiva a Tutte le 17 Regole del Giuoco del Calcio</p>
+    <h1>SUPER REGOLAMENTO AIA 2026</h1>
+    <p>Misure, DOGSO, SPA e Quiz Esame</p>
+    <button class="btn btn-start" onclick="startQuiz()">AVVIA QUIZ (20 DOMANDE)</button>
 </header>
 
-<nav>
-    <a href="#area1">R1-R4: Setting</a>
-    <a href="#area2">R5-R6: Autorità</a>
-    <a href="#area3">R7-R10: Tempo</a>
-    <a href="#area4">R11-R12: Giudizio</a>
-    <a href="#area5">R13-R17: Riprese</a>
-    <a href="#dogso-spa">DOGSO & SPA</a>
-</nav>
+<div class="container" id="main-content">
+    
+    <div class="regola">
+        <h3>📏 MISURE E CAMPO (Regola 1 & 2)</h3>
+        <ul>
+            <li><strong>Lunghezza:</strong> Min 90m / Max 120m.</li>
+            <li><strong>Larghezza:</strong> Min 45m / Max 90m.</li>
+            <li><strong>Porte:</strong> 7.32m tra i pali, 2.44m altezza traversa.</li>
+            <li><strong>Cerchio centrale:</strong> Raggio 9.15m.</li>
+            <li><strong>Pallone:</strong> Circonferenza 68-70cm, Peso 410-450g.</li>
+        </ul>
+    </div>
 
-<div class="container">
-
-    <section id="area1">
-        <h2>Area 1: Il Setting</h2>
-        
-        <div class="regola-card">
-            <h3><span class="numero-regola">R1</span> Il Terreno di Gioco</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Definisce le misure, la segnatura e la sicurezza del campo. L'arbitro è responsabile del controllo prima della gara.</p>
-            <p class="esempio"><em>Esempio:</em> Se una porta non è fissata saldamente a terra, l'arbitro non deve far iniziare la gara finché non è messa in sicurezza.</p>
+    <div class="regola">
+        <h3>🚩 FUORIGIOCO (Regola 11)</h3>
+        <p>Un calciatore è in posizione se una parte qualsiasi di testa, corpo o piedi è più vicina alla porta rispetto al pallone e al <strong>penultimo difendente</strong>.</p>
+        <div class="highlight">
+            <strong>Quando è punibile?</strong> Se tocca palla, se interferisce con un avversario (es: copre visuale) o se trae vantaggio da un palo/traversa. 
+            <em>Mai fuorigioco su: Rimessa laterale, Calcio d'angolo, Calcio di rinvio.</em>
         </div>
+    </div>
 
-        <div class="regola-card">
-            <h3><span class="numero-regola">R2</span> Il Pallone</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Stabilisce le caratteristiche tecniche (materiale, circonferenza, peso, pressione) e le procedure per la sua sostituzione.</p>
-            <p class="esempio"><em>Esempio:</em> Se il pallone scoppia mentre è in gioco, la gara deve essere interrotta e ripresa con una rimessa dell'arbitro con un nuovo pallone.</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R3</span> I Calciatori</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Massimo 11 giocatori, minimo 7 per squadra. Definisce anche le procedure e le regole per le sostituzioni.</p>
-            <p class="esempio"><em>Esempio:</em> Una squadra che rimane con soli 6 calciatori in campo perde la gara a tavolino.</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R4</span> L'Equipaggiamento dei Calciatori</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Regolamenta l'attrezzo obbligatorio (maglia, parastinchi, calzettoni) e vieta qualsiasi oggetto pericoloso (gioielli, orologi).</p>
-            <p class="esempio"><em>Esempio:</em> Un calciatore che si rifiuta di togliere un anello non può entrare in campo.</p>
-        </div>
-    </section>
-
-    <section id="area2">
-        <h2>Area 2: L'Autorità</h2>
-        
-        <div class="regola-card">
-            <h3><span class="numero-regola">R5</span> L'Arbitro</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Ha l'autorità assoluta per far rispettare le regole. Le sue decisioni sono definitive. Include il concetto chiave di vantaggio.</p>
-            <div class="focus-box">
-                <strong>Vantaggio:</strong> L'arbitro può permettere al gioco di proseguire se la squadra contro cui è stato commesso un fallo è in una posizione vantaggiosa.
+    <div class="regola">
+        <h3>⚖️ DOGSO vs SPA (Regola 12)</h3>
+        <div style="display: flex; gap: 20px;">
+            <div style="flex:1">
+                <strong>DOGSO (Rosso)</strong>: Nega evidente opportunità di gol.
+                <p>Criteri: Distanza, Direzione, Controllo palla, Posizione difensori.</p>
+                <small>*Se in area e cerco la palla: Giallo (Depenalizzazione).</small>
+            </div>
+            <div style="flex:1">
+                <strong>SPA (Giallo)</strong>: Interrompe attacco promettente.
+                <p>Mancano uno o più criteri del DOGSO ma l'azione era pericolosa.</p>
             </div>
         </div>
+    </div>
 
-        <div class="regola-card">
-            <h3><span class="numero-regola">R6</span> Gli Altri Ufficiali di Gara</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Delinea i ruoli e i compiti degli assistenti, del quarto ufficiale, e, dove previsto, del VAR.</p>
-            <p class="esempio"><em>Esempio:</em> L'assistente segnala all'arbitro un fallo che è avvenuto fuori dalla visuale dell'arbitro principale.</p>
-        </div>
-    </section>
-
-    <section id="area3">
-        <h2>Area 3: Tempo e Spazio</h2>
-        
-        <div class="regola-card">
-            <h3><span class="numero-regola">R7</span> La Durata della Gara</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Due tempi da 45 minuti, con un intervallo massimo di 15 minuti. L'arbitro gestisce il tempo di recupero.</p>
-            <p class="esempio"><em>Esempio:</em> L'arbitro aggiunge tempo di recupero per compensare le sostituzioni e le interruzioni per infortuni.</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R8</span> L'Inizio e la Ripresa del Gioco</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Definisce le procedure per l'inizio della gara (calcio d'inizio), dopo una rete, e dopo un'interruzione (rimessa dell'arbitro).</p>
-            <p class="esempio"><em>Esempio:</em> Al calcio d'inizio, tutti i calciatori devono essere nella propria metà campo.</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R9</span> Pallone in Gioco e non in Gioco</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Il pallone è non in gioco quando ha oltrepassato interamente una linea perimetrale o l'arbitro ha interrotto il gioco. In ogni altro momento è in gioco.</p>
-            <p class="esempio"><em>Esempio:</em> Se il pallone colpisce l'arbitro in campo e rimane dentro, il gioco continua (salvo rari casi specifici).</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R10</span> L'Esito di una Gara</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Stabilisce come si segna una rete valida (il pallone deve oltrepassare interamente la linea di porta tra i pali).</p>
-        </div>
-    </section>
-
-    <section id="area4">
-        <h2>Area 4: Il Giudizio</h2>
-        
-        <div class="regola-card">
-            <h3><span class="numero-regola">R11</span> Il Fuorigioco</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Non è reato essere in posizione, lo è <em>trarre vantaggio</em>, <em>interferire</em> con il gioco o con un avversario.</p>
-            <p class="esempio"><em>Esempio:</em> Un attaccante in fuorigioco che corre verso il pallone e impedisce al difensore di giocarlo commette infrazione.</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R12</span> Falli e Scorrettezze</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Delinea tutti i tipi di falli (diretti, indiretti, di mano) e le relative sanzioni disciplinari. È la regola più complessa.</p>
-            <p class="esempio"><em>Esempio:</em> Un fallo di mano deliberato è punito con un calcio di punizione diretto.</p>
-        </div>
-    </section>
-
-    <section id="dogso-spa">
-        <h2>Focus: Sanzioni Disciplinari</h2>
-        <div class="dogso-spa-section">
-            <div class="dogso">
-                <h3><span class="badge badge-red">DOGSO</span></h3>
-                <p><strong>Negare un'evidente opportunità di segnare una rete.</strong></p>
-                <p>L'infrazione deve soddisfare tutti i criteri di distanza, direzione, controllo della palla e posizione dei difensori.</p>
-                <p><strong>Sanzione:</strong> Espulsione (Rosso) se fuori area o se in area senza tentativo di giocare palla. Ammonizione (Giallo) se in area con tentativo di giocare palla.</p>
-            </div>
-            <div class="spa">
-                <h3><span class="badge badge-yellow">SPA</span></h3>
-                <p><strong>Interrompere un attacco promettente.</strong></p>
-                <p>L'attacco è pericoloso ma non è un'evidente opportunità di gol perché mancano uno o più requisiti del DOGSO.</p>
-                <p><strong>Sanzione:</strong> Sempre Ammonizione (Giallo).</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="area5">
-        <h2>Area 5: Le Riprese</h2>
-        
-        <div class="regola-card">
-            <h3><span class="numero-regola">R13</span> Calci di Punizione</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Regolamenta i calci di punizione diretti e indiretti, specificando la procedura per l'esecuzione e la distanza degli avversari (9,15 m).</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R14</span> Il Calcio di Rigore</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Procedura per il calcio di rigore, che viene assegnato per un fallo diretto commesso all'interno della propria area di rigore.</p>
-            <p class="esempio"><em>Esempio:</em> Se il portiere commette un'infrazione durante l'esecuzione che influisce sul rigore, questo deve essere ripetuto.</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R15</span> La Rimessa dalla Linea Laterale</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Delinea la corretta esecuzione della rimessa laterale (due piedi a terra, mani sopra la testa).</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R16</span> Il Calcio di Rinvio</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Procedura per il calcio di rinvio, che viene assegnato quando il pallone ha oltrepassato interamente la linea di porta dopo essere stato toccato per ultimo da un attaccante.</p>
-        </div>
-
-        <div class="regola-card">
-            <h3><span class="numero-regola">R17</span> Il Calcio d'Angolo</h3>
-            <p class="spiegazione"><strong>Spiegazione:</strong> Procedura per il calcio d'angolo, che viene assegnato quando il pallone ha oltrepassato interamente la linea di porta dopo essere stato toccato per ultimo da un difendente.</p>
-        </div>
-    </section>
-
+    <div class="regola">
+        <h3>⚽ FALLI E RIPRESE</h3>
+        <p><strong>Calcio Punizione Diretto:</strong> Falli di mano, contatti negligenti, imprudenti o con vigoria sproporzionata.</p>
+        <p><strong>Calcio Punizione Indiretto:</strong> Gioco pericoloso, ostacolo senza contatto, portiere che tiene palla > 6 sec, retropassaggio volontario di piede al portiere.</p>
+    </div>
 </div>
 
-<footer>
-    <p>&copy; 2026 WikiArbitri - Materiale ad uso didattico per il Corso Arbitri.</p>
-    <p>Ricorda: il Regolamento ufficiale è pubblicato dall'IFAB.</p>
-</footer>
+<div class="container" id="quiz-section">
+    <div class="timer" id="timer">15</div>
+    <h2 id="question-text">Domanda qui</h2>
+    <div id="options">
+        <button class="btn btn-true" onclick="checkAnswer(true)">VERO</button>
+        <button class="btn btn-false" onclick="checkAnswer(false)">FALSO</button>
+    </div>
+    <p id="score-display">Domanda 1 di 20</p>
+</div>
+
+<script>
+const questions = [
+    { q: "L'altezza della traversa è di 2.44 metri?", a: true },
+    { q: "Si può essere in fuorigioco sulla propria metà campo?", a: false },
+    { q: "Su rimessa laterale esiste il fuorigioco?", a: false },
+    { q: "Il portiere può toccare palla con le mani su retropassaggio volontario di piede di un compagno?", a: false },
+    { q: "Il raggio del cerchio centrale è di 9.15 metri?", a: true },
+    { q: "Il DOGSO in area con tentativo di giocare il pallone è Rosso?", a: false },
+    { q: "Un attacco promettente interrotto (SPA) è sempre Giallo?", a: true },
+    { q: "L'arbitro può cambiare decisione se il gioco non è ancora ripreso?", a: true },
+    { q: "Se la palla colpisce l'arbitro e finisce in rete, il gol è valido?", a: false },
+    { q: "Il numero minimo di giocatori per iniziare una gara è 7?", a: true },
+    { q: "Il calcio di rinvio può essere segnato direttamente nella porta avversaria?", a: true },
+    { q: "Un giocatore che toglie la maglia dopo un gol va ammonito?", a: true },
+    { q: "Il fuorigioco si valuta al momento del tocco del compagno?", a: true },
+    { q: "Il fallo di mano volontario fuori area è punizione indiretta?", a: false },
+    { q: "La larghezza massima di un campo può essere 90 metri?", a: true },
+    { q: "Un oggetto lanciato contro il pallone comporta punizione diretta?", a: true },
+    { q: "Il vantaggio si applica sempre, anche su falli da rosso?", a: false },
+    { q: "I parastinchi sono facoltativi?", a: false },
+    { q: "Se un rigore colpisce il palo e torna al tiratore che segna senza tocchi altrui, il gol è valido?", a: false },
+    { q: "L'arbitro è l'unico cronometrista ufficiale della gara?", a: true }
+];
+
+let currentQ = 0;
+let score = 0;
+let timeLeft = 15;
+let timer;
+
+function startQuiz() {
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+    showQuestion();
+}
+
+function showQuestion() {
+    if (currentQ >= 20) {
+        alert("Quiz terminato! Punteggio: " + score + "/20");
+        location.reload();
+        return;
+    }
+    timeLeft = 15;
+    document.getElementById('timer').innerText = timeLeft;
+    document.getElementById('question-text').innerText = questions[currentQ].q;
+    document.getElementById('score-display').innerText = "Domanda " + (currentQ + 1) + " di 20";
+    
+    clearInterval(timer);
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').innerText = timeLeft;
+        if (timeLeft <= 0) {
+            checkAnswer(null);
+        }
+    }, 1000);
+}
+
+function checkAnswer(val) {
+    clearInterval(timer);
+    if (val === questions[currentQ].a) {
+        score++;
+        alert("Corretto!");
+    } else {
+        alert("Sbagliato! La risposta era " + (questions[currentQ].a ? "VERO" : "FALSO"));
+    }
+    currentQ++;
+    showQuestion();
+}
+</script>
 
 </body>
 </html>
